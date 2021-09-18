@@ -4,9 +4,9 @@ import astropy_stark.mytemp0 as mt0
 import scipy.stats as ss
 #from scipy import signal
 
-#from pycallgraph import PyCallGraph
-#from pycallgraph.output import GraphvizOutput
-#from pycallgraph import Config
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
+from pycallgraph import Config
 
 twopi = np.pi * 2
 deg2rad = np.pi / 180
@@ -120,7 +120,8 @@ def pytfb_sub(taus, embh, emdot, wavang, deginc, t0vin=-1, t0iin=-1, alpha_visc=
                 # now azimuth grid
                 azwidth = drad / radlo
                 azgrid = np.arange(0.0, twopi, azwidth)
-                naz = np.shape(azgrid)[0]
+                naz= int(twopi/azwidth)+1
+                #naz1 = np.shape(azgrid)[0]
                 nazsub1 = naz - 1
 
                 raz = np.random.uniform(radlo, radhi, nazsub1)
@@ -256,12 +257,15 @@ def pytfb_sub(taus, embh, emdot, wavang, deginc, t0vin=-1, t0iin=-1, alpha_visc=
         return (psis)
 
 
-#
 
 
 
 
 if __name__ == '__main__':
+
+
+
+
     taugrid = np.arange(0, 30.1, 0.1)
     embh = 1.e7
     emdot = 1.0
@@ -293,31 +297,31 @@ if __name__ == '__main__':
     )
 
 
-    #config = Config(max_depth=20)
-    #graphviz = GraphvizOutput(output_file="profile_mytfbquick.png")
-    #with PyCallGraph(output=graphviz, config=config):
-    #    psi = pytfb_sub(
-    #        taugrid,
-    #        embh,
-    #        emdot,
-    #        wavnow,
-    #        deginc,
-    #        t0vin=-1,
-    #        t0iin=-1,
-    #        alpha_visc=-0.75,
-    #        hxsch=3.0,
-    #        alpha_irad=-0.75,
-    #        eta=0.1,
-    #        rlosch=3.0,
-    #        norm=1,
-    #        quick=1,
-    #        xstop=15,
-    #        udlnr=0.01,
-    #        thcent=1.0,
-    #        thfwhm=0.2,
-    #        oldsmooth=0,
-    #        newsmooth=1,
-    #        diagnose=0,
-    #    )
+    config = Config(max_depth=20)
+    graphviz = GraphvizOutput(output_file="profile_mytfbquick_fast.png")
+    with PyCallGraph(output=graphviz, config=config):
+        psi = pytfb_sub(
+            taugrid,
+            embh,
+            emdot,
+            wavnow,
+            deginc,
+            t0vin=-1,
+            t0iin=-1,
+            alpha_visc=-0.75,
+            hxsch=3.0,
+            alpha_irad=-0.75,
+            eta=0.1,
+            rlosch=3.0,
+            norm=1,
+            quick=1,
+            xstop=15,
+            udlnr=0.01,
+            thcent=1.0,
+            thfwhm=0.2,
+            oldsmooth=0,
+            newsmooth=1,
+            diagnose=0,
+        )
 #
 #
