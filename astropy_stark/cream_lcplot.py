@@ -10,7 +10,9 @@ import astropy_stark.cream_posterior as cpos
 
 
 
-def lcplot(dnow,title='',idburnin=2./3,justth=0,justcont=0,plotinfo=1,
+def lcplot(dnow,
+           output_dir:str='./',img_format:str='.pdf'
+           title='',idburnin=2./3,justth=0,justcont=0,plotinfo=1,
            plottrace=0,plots_per_page=5,xlclab = 'Time (HJD - 50,000)',xtflab ='lag (days)',forcelab=[],forcelag=[],sameplotdrive=1,extents=[],justnewsig=0,taumeanplot=1,tau90plot=0,postplot=1,header='',tauplot0=0,gplot=1,true=['','',np.log10(0.75)]):
  '''
  #input dirres (list of target directories from which to make plot (1plot per list element))
@@ -246,7 +248,7 @@ def lcplot(dnow,title='',idburnin=2./3,justth=0,justcont=0,plotinfo=1,
     print('traceplot...',iynow,ixnow,np.mean(ptrace_plot[idx]), np.std(ptrace_plot[idx]))
    #plt.tight_layout()
    ax1.set_title(head[idnow])
-   plt.savefig('traceplot_'+np.str(tit[idnow])+'.pdf')
+   plt.savefig(os.path.join(output_dir,"traceplot_{}{}".format(np.str(tit[idnow]),img_format)))
 
 
 
@@ -313,7 +315,7 @@ def lcplot(dnow,title='',idburnin=2./3,justth=0,justcont=0,plotinfo=1,
    ax1.set_ylabel('P(f)')
    ax1.set_title(head[idnow])
 
-   plt.savefig('fitinfo_'+np.str(tit[idnow])+'.pdf')
+   plt.savefig(os.path.join(output_dir,'fitinfo_{}{}'.format(np.str(tit[idnow]),img_format)))
 
 
 
@@ -548,14 +550,14 @@ def lcplot(dnow,title='',idburnin=2./3,justth=0,justcont=0,plotinfo=1,
     ipnow = ipnow + 1
 
    ax1.set_title(head[idnow])
-   plt.savefig('page_'+np.str(np.int(ipage))+'_'+'lcplot_'+np.str(tit[idnow])+'.pdf')
+   plt.savefig(os.path.join(output_dir,'page_{}_{}_{}{}'.format(np.str(np.int(ipage)),'lcplot',np.str(tit[idnow]),img_format)))
    plt.close()
 
 
   if (postplot == 1):
-   print('making posterior plot....','posterior_'+tit[idnow]+'.pdf')
+   print('making posterior plot....','posterior_{}{}'.format(tit[idnow],img_format))
    try:
-    cpos.cream_posterior(dnow,true=true,header=head[idnow],extents_in=extents,fsave='posterior_'+tit[idnow]+'.pdf')
+    cpos.cream_posterior(dnow,true=true,header=head[idnow],extents_in=extents,fsave=os.path.join(output_dir,'posterior_{}{}'.formt(tit[idnow],img_format)))
    except:
     print('unable to make covariance plot for disc posteriors. Please check at least some of these are set to vary'
           'in the fit.')
@@ -595,7 +597,7 @@ def lcplot(dnow,title='',idburnin=2./3,justth=0,justcont=0,plotinfo=1,
   plt.legend()
   print(dnow+'/G_plot.pdf')
   plt.tight_layout()
-  plt.savefig(dnow+'/G_plot.pdf')
+  plt.savefig(os.path.join(output_dir,'G_plot{}'.format(img_format)))
 
 
   #save the effective chi squared and calculate the effective number of Fourier (and non Fourier parameters)
