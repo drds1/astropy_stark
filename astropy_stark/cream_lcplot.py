@@ -11,7 +11,7 @@ import astropy_stark.cream_posterior as cpos
 
 
 def lcplot(dnow,
-           output_dir:str='./',img_format:str='.pdf'
+           output_dir:str='./',img_format:str='.pdf',
            title='',idburnin=2./3,justth=0,justcont=0,plotinfo=1,
            plottrace=0,plots_per_page=5,xlclab = 'Time (HJD - 50,000)',xtflab ='lag (days)',forcelab=[],forcelag=[],sameplotdrive=1,extents=[],justnewsig=0,taumeanplot=1,tau90plot=0,postplot=1,header='',tauplot0=0,gplot=1,true=['','',np.log10(0.75)]):
  '''

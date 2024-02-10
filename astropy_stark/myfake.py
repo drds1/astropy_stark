@@ -21,7 +21,7 @@
 # no errors calculated for driving light curve include later if needed
 
 import numpy as np
-import pylab as plt
+import matplotlib.pylab as plt
 import os
 import astropy_stark.mytfb_quick as tfb
 import astropy_stark.myedlum as me
